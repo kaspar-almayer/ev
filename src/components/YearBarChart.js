@@ -33,7 +33,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
 
     const yScale = d3
       .scaleLinear()
-      .domain([200, 0]) // min and max value in our data array
+      .domain([300, 0]) // min and max value in our data array
       .range([0, 400]); // min and max value of our svg container
 
     const xAxis = d3
@@ -61,7 +61,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .attr("class", "bar")
       .attr("x", (d, index) => xScale(d.date))
       .attr("y", (d) => yScale(d.data))
-      .attr("height", (d) => yScale(200 - d.data))
+      .attr("height", (d) => yScale(300 - d.data))
       .attr("width", xScale.bandwidth())
       .attr("rx", 6)
       .attr("ry", 6)
@@ -81,7 +81,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
         (d, index) =>
           xScale(d.date) + (d.data > 100 ? (d.data > 280 ? 2 : 4) : 7)
       )
-      .attr("y", (d) => (d.data > 200 ? yScale(215) : yScale(d.data) + 20))
+      .attr("y", (d) => (d.data > 300 ? yScale(315) : yScale(d.data) + 20))
       .attr("fill", "#fff")
       .attr("font-size", 12);
 
