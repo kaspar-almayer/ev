@@ -67,8 +67,14 @@ const infoModalContent = (
 const contactModalContent = (
   <>
     <p>
-      Kontakt:{" "}
+      Kontakt:
+      <br />
+      <br />
+      email:{" "}
       <a href="mailto:autowolt@protonmail.com">autowolt@protonmail.com</a>
+      <br />
+      <br />
+      twitter: <a href="https://twitter.com/autowolt">@autowolt</a>
     </p>
   </>
 );
