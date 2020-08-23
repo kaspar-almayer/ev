@@ -6,10 +6,8 @@ import Header from "./components/Header";
 import Info from "./components/Info";
 import Modal from "./components/Modal";
 
-import DATA_2020 from "./mergedData.json";
-import DATA_2019 from "./data2020.json";
-//import DATA_2019 from "./mergedData2019.json";
-//import DATA_2020 from "./mergedData.json";
+import DATA_2020 from "./data2020.json";
+import DATA_2019 from "./data2019.json";
 
 import { filterNewCars } from "./helpers";
 import styled from "styled-components";

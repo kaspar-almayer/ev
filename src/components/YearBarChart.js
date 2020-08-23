@@ -74,12 +74,12 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .selectAll(".bar-label")
       .data(data)
       .join("text")
-      .text((d) => (d.data > 200 ? `${d.data}*` : d.data))
+      .text((d) => (d.data > 280 ? `${d.data}*` : d.data))
       .attr("class", "bar-label")
       .attr(
         "x",
         (d, index) =>
-          xScale(d.date) + (d.data > 100 ? (d.data > 200 ? 2 : 4) : 7)
+          xScale(d.date) + (d.data > 100 ? (d.data > 280 ? 2 : 4) : 7)
       )
       .attr("y", (d) => (d.data > 200 ? yScale(215) : yScale(d.data) + 20))
       .attr("fill", "#fff")
