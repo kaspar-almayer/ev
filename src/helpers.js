@@ -49,7 +49,7 @@ export const getMonthName = (month) => {
       return "Maj 2020";
     case 18:
       return "Czerwiec 2020";
-    case 20:
+    case 19:
       return "Lipiec 2020";
     case 20:
       return "Sierpień 2020";
