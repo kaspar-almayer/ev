@@ -1,13 +1,19 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-import { donutColors, getMonthName, modelUnify } from "./../helpers";
+import Info from "./Info";
+import { modelUnify, yearDonutColors } from "./../helpers";
 
 import styled from "styled-components";
 
 const StyledDonutWrapper = styled.div`
+  display: flex;
+`;
+
+const YearSummaryWrapper = styled.div`
   flex: 0 1 50%;
   padding-right: 30px;
+  margin-bottom: 100px;
 `;
 
 const StyledSvgWrapper = styled.div`
@@ -15,8 +21,14 @@ const StyledSvgWrapper = styled.div`
   flex: auto;
 `;
 
+const StyledLegendWrapper = styled.div`
+  margin-top: 75px;
+  margin-left: 50px;
+`;
+
 const StyledDonutLabel = styled.p`
   display: flex;
+  align-items: center;
 `;
 
 const StyledDonutLabelText = styled.span``;
@@ -32,7 +44,13 @@ const StyledDonutLabelNumber = styled.span`
   margin-right: 10px;
 `;
 
-const DonutChart = ({ data, selectedMonth }) => {
+const StyledInfo = styled(Info)`
+  padding-bottom: 0;
+  margin-bottom: 0;
+  margin-top: 50px;
+`;
+
+const YearSummary = ({ data, summary }) => {
   const ref = useRef();
 
   const reduceData = (data) =>
@@ -61,8 +79,8 @@ const DonutChart = ({ data, selectedMonth }) => {
     .sort((a, b) => b.value - a.value);
 
   data = [
-    ...data.slice(0, 5),
-    { name: "Pozostałe", value: reduceData(data.slice(5)) },
+    ...data.slice(0, 10),
+    { name: "Pozostałe", value: reduceData(data.slice(10)) },
   ];
 
   useEffect(() => {
@@ -73,7 +91,7 @@ const DonutChart = ({ data, selectedMonth }) => {
     var color = d3
       .scaleOrdinal()
       .domain(data.map((d) => d.name))
-      .range(donutColors);
+      .range(yearDonutColors);
 
     var pie = d3
       .pie()
@@ -86,7 +104,7 @@ const DonutChart = ({ data, selectedMonth }) => {
     // The arc generator
     var arc = d3
       .arc()
-      .innerRadius(radius * 0.5) // This is the size of the donut hole
+      .innerRadius(0) // This is the size of the donut hole
       .outerRadius(radius * 0.8);
 
     const chart = svgElement
@@ -107,28 +125,32 @@ const DonutChart = ({ data, selectedMonth }) => {
   }, [data]);
 
   return (
-    <StyledDonutWrapper>
-      <p className="donut-heading">{getMonthName(selectedMonth)}</p>
-      <div className="wrapper">
+    <YearSummaryWrapper>
+      <StyledInfo
+        content={`Top 10 nowych zerejestrowanych samochodów elektrycznych w 2020 roku (styczeń-lipiec) - ${summary}`}
+      />
+      <StyledDonutWrapper>
         <StyledSvgWrapper>
           <svg viewBox="0 0 500 500" ref={ref} />
         </StyledSvgWrapper>
-        <div>
+        <StyledLegendWrapper>
           {data.map((model, index) => (
             <StyledDonutLabel key={index}>
               <StyledDonutLabelNumber
                 className="donut-label"
-                style={{ backgroundColor: donutColors[index] }}
+                style={{ backgroundColor: yearDonutColors[index] }}
               >
-                {model.value}
+                {index + 1}
               </StyledDonutLabelNumber>
-              <StyledDonutLabelText>{model.name}</StyledDonutLabelText>
+              <StyledDonutLabelText>
+                {model.name} ({model.value})
+              </StyledDonutLabelText>
             </StyledDonutLabel>
           ))}
-        </div>
-      </div>
-    </StyledDonutWrapper>
+        </StyledLegendWrapper>
+      </StyledDonutWrapper>
+    </YearSummaryWrapper>
   );
 };
 
-export default DonutChart;
+export default YearSummary;

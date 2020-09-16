@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import YearBarChart from "./components/YearBarChart";
 import DonutChart from "./components/Donut";
+import YearSummary from "./components/YearSummary";
 import Header from "./components/Header";
 import Info from "./components/Info";
 import Modal from "./components/Modal";
@@ -51,30 +52,56 @@ function App() {
   return (
     <div className="App">
       <Header handleModalToogle={handleModalToogle} />
-      <Info />
+      <Info content="Liczba rejestracji nowych samochodów elektrycznych w Polsce." />
       {modal.showModal && (
         <Modal modalType={modal.modalType} closeModal={handleModalToogle} />
       )}
       {dataLoaded ? (
-        <StyledMain>
-          <YearBarChart
-            data={data}
-            setselectedMonth={setselectedMonth}
-            selectedMonth={selectedMonth}
-          />
-          <DonutChart
-            data={
-              data.find(({ date }) => {
-                if (selectedMonth > 12) {
-                  return date === `data_${selectedMonth - 12}_2020`;
-                } else {
-                  return date === `data_${selectedMonth}_2019`;
-                }
-              }).data
-            }
-            selectedMonth={selectedMonth}
-          />
-        </StyledMain>
+        <>
+          <StyledMain>
+            <YearBarChart
+              data={data}
+              setselectedMonth={setselectedMonth}
+              selectedMonth={selectedMonth}
+            />
+            <DonutChart
+              data={
+                data.find(({ date }) => {
+                  if (selectedMonth > 12) {
+                    return date === `data_${selectedMonth - 12}_2020`;
+                  } else {
+                    return date === `data_${selectedMonth}_2019`;
+                  }
+                }).data
+              }
+              selectedMonth={selectedMonth}
+            />
+          </StyledMain>
+          <StyledMain>
+            <YearSummary
+              data={[
+                ...data[12].data,
+                ...data[13].data,
+                ...data[14].data,
+                ...data[15].data,
+                ...data[16].data,
+                ...data[17].data,
+                ...data[18].data,
+              ]}
+              summary={
+                [
+                  ...data[12].data,
+                  ...data[13].data,
+                  ...data[14].data,
+                  ...data[15].data,
+                  ...data[16].data,
+                  ...data[17].data,
+                  ...data[18].data,
+                ].length
+              }
+            />
+          </StyledMain>
+        </>
       ) : (
         <p>loading...</p>
       )}
