@@ -19,11 +19,17 @@ const YearSummaryWrapper = styled.div`
 const StyledSvgWrapper = styled.div`
   max-width: 500px;
   flex: auto;
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const StyledLegendWrapper = styled.div`
   margin-top: 75px;
   margin-left: 50px;
+  @media (max-width: 700px) {
+    margin-top: 30px;
+  }
 `;
 
 const StyledDonutLabel = styled.p`
@@ -48,6 +54,9 @@ const StyledInfo = styled(Info)`
   padding-bottom: 0;
   margin-bottom: 0;
   margin-top: 50px;
+  @media (max-width: 700px) {
+    padding: 30px;
+  }
 `;
 
 const YearSummary = ({ data, summary }) => {

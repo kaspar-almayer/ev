@@ -7,7 +7,6 @@ const StyledChartWrapper = styled.div`
   flex: 0 1 50%;
   text-align: center;
   max-width: 700px;
-  margin-right: 30px;
 `;
 
 const StyledFootNote = styled.p`
@@ -112,7 +111,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
   return (
     <StyledChartWrapper>
       <svg viewBox="0 0 700 500">
-        <g ref={ref} transform="translate(50,50)">
+        <g ref={ref} transform="translate(0,50)">
           <g className="x-axis" />
           <g className="y-axis" />
         </g>

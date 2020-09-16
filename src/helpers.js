@@ -26,7 +26,6 @@ export const yearDonutColors = [
 ];
 
 export const modelUnify = (model) => {
-  console.log(model);
   switch (model) {
     case "LEAF 40KWH":
       return "LEAF";
