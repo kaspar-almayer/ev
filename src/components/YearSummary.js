@@ -53,10 +53,8 @@ const StyledDonutLabelNumber = styled.span`
 const StyledInfo = styled(Info)`
   padding-bottom: 0;
   margin-bottom: 0;
-  margin-top: 50px;
-  @media (max-width: 700px) {
-    padding: 30px;
-  }
+  margin-top: 100px;
+  padding: 30px;
 `;
 
 const YearSummary = ({ data, summary }) => {

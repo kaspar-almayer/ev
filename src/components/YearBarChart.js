@@ -7,6 +7,9 @@ const StyledChartWrapper = styled.div`
   flex: 0 1 50%;
   text-align: center;
   max-width: 700px;
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
 `;
 
 const StyledFootNote = styled.p`
@@ -14,6 +17,7 @@ const StyledFootNote = styled.p`
   max-width: 600px;
   font-size: 14px;
   margin: 0 auto;
+  word-break: break-all;
 `;
 
 const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
