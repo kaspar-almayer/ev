@@ -17,7 +17,12 @@ const StyledFootNote = styled.p`
   max-width: 600px;
   font-size: 14px;
   margin: 0 auto;
-  word-break: break-all;
+  a {
+    word-break: break-all;
+  }
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 `;
 
 const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {

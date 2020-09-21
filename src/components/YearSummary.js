@@ -134,7 +134,7 @@ const YearSummary = ({ data, summary }) => {
   return (
     <YearSummaryWrapper>
       <StyledInfo
-        content={`Top 10 nowych zerejestrowanych samochodów elektrycznych w 2020 roku (styczeń-lipiec) - ${summary}`}
+        content={`Top 10 nowych zerejestrowanych samochodów elektrycznych w 2020 roku (styczeń-lipiec)`}
       />
       <StyledDonutWrapper>
         <StyledSvgWrapper>
