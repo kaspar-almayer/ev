@@ -17,6 +17,7 @@ const StyledSvgWrapper = styled.div`
 
 const StyledDonutLabel = styled.p`
   display: flex;
+  align-items: center;
 `;
 
 const StyledDonutLabelText = styled.span``;

@@ -87,6 +87,7 @@ function App() {
                 ...data[16].data,
                 ...data[17].data,
                 ...data[18].data,
+                ...data[19].data,
               ]}
               summary={
                 [
@@ -97,6 +98,7 @@ function App() {
                   ...data[16].data,
                   ...data[17].data,
                   ...data[18].data,
+                  ...data[19].data,
                 ].length
               }
             />
