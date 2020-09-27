@@ -73,9 +73,13 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .attr("width", xScale.bandwidth())
       .attr("rx", 6)
       .attr("ry", 6)
+      .transition()
       .attr("fill", (d, index) =>
         index + 1 === selectedMonth ? "#343181" : "#6E6BC7"
-      )
+      );
+
+    chart
+      .selectAll(".bar")
       .on("click", (d, index) => setselectedMonth(index + 1));
 
     chart
@@ -102,6 +106,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .attr("y", 390)
       .attr("height", 10)
       .attr("width", xScale.bandwidth())
+      .transition()
       .attr("fill", (d, index) =>
         index + 1 === selectedMonth ? "#343181" : "#6E6BC7"
       );

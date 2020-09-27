@@ -67,7 +67,7 @@ const DonutChart = ({ data, selectedMonth }) => {
   ];
 
   useEffect(() => {
-    const svgElement = d3.select(ref.current);
+    const chart = d3.select(ref.current);
 
     var radius = 200;
 
@@ -90,16 +90,34 @@ const DonutChart = ({ data, selectedMonth }) => {
       .innerRadius(radius * 0.5) // This is the size of the donut hole
       .outerRadius(radius * 0.8);
 
-    const chart = svgElement
-      .append("g")
-      .attr("transform", "translate(250,250)");
+    const prev = chart.selectAll("path").select((d, i) => d)._groups[0];
 
     chart
-      .selectAll("whatever")
+      .selectAll(".test")
       .data(data_ready)
-      .enter()
-      .append("path")
+      .join("path")
+      .attr("class", "test")
       .attr("d", arc)
+      .transition()
+      .duration(750)
+      .attrTween("d", function (d, i) {
+        console.log(prev);
+        const start = { startAngle: 0, endAngle: 0 };
+
+        const test = {
+          startAngle: prev[i]?.startAngle,
+          endAngle: prev[i]?.endAngle,
+        };
+        const interpolate = prev.length
+          ? d3.interpolate(test, d)
+          : d3.interpolate(start, d);
+
+        return function (t) {
+          d = interpolate(t);
+
+          return arc(d);
+        };
+      })
       .attr("fill", function (d) {
         return color(d.data.value.name);
       })
@@ -112,7 +130,9 @@ const DonutChart = ({ data, selectedMonth }) => {
       <p className="donut-heading">{getMonthName(selectedMonth)}</p>
       <div className="wrapper">
         <StyledSvgWrapper>
-          <svg viewBox="0 0 500 500" ref={ref} />
+          <svg viewBox="0 0 500 500">
+            <g ref={ref} transform="translate(250,250)"></g>
+          </svg>
         </StyledSvgWrapper>
         <div>
           {data.map((model, index) => (
