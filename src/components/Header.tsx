@@ -35,7 +35,11 @@ const StyledLogoWrapper = styled.header`
   }
 `;
 
-const Header = ({ handleModalToogle }) => {
+type HeaderProps = {
+  handleModalToogle: (modaltype: string) => void;
+};
+
+const Header = ({ handleModalToogle }: HeaderProps) => {
   return (
     <StyledHeader>
       <StyledLogoWrapper>

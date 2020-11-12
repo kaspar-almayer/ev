@@ -11,7 +11,12 @@ const StyledInfo = styled.p`
   }
 `;
 
-const Info = ({ className, content }) => {
+type InfoProps = {
+  className: string;
+  content: string;
+};
+
+const Info = ({ className, content }: InfoProps) => {
   return <StyledInfo className={className}>{content}</StyledInfo>;
 };
 
