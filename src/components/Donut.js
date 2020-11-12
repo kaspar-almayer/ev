@@ -41,7 +41,7 @@ const DonutChart = ({ data, selectedMonth }) => {
       return a + b.value;
     }, 0);
 
-  data = data
+  const modelsCountObject = data
     .map(
       (el) =>
         `${
@@ -52,18 +52,19 @@ const DonutChart = ({ data, selectedMonth }) => {
       map[val] = (map[val] || 0) + 1;
       return map;
     }, {});
-  data = Object.keys(data)
+
+  const modelsCountArray = Object.keys(modelsCountObject)
     .map((key) => {
       return {
         name: key,
-        value: data[key],
+        value: modelsCountObject[key],
       };
     })
     .sort((a, b) => b.value - a.value);
 
-  data = [
-    ...data.slice(0, 5),
-    { name: "Pozostałe", value: reduceData(data.slice(5)) },
+  const topFiveModelsCount = [
+    ...modelsCountArray.slice(0, 5),
+    { name: "Pozostałe", value: reduceData(modelsCountArray.slice(5)) },
   ];
 
   useEffect(() => {
@@ -73,7 +74,7 @@ const DonutChart = ({ data, selectedMonth }) => {
 
     var color = d3
       .scaleOrdinal()
-      .domain(data.map((d) => d.name))
+      .domain(topFiveModelsCount.map((d) => d.name))
       .range(donutColors);
 
     var pie = d3
@@ -82,7 +83,7 @@ const DonutChart = ({ data, selectedMonth }) => {
         return d.value.value;
       })
       .sort(null);
-    var data_ready = pie(d3.entries(data));
+    var data_ready = pie(d3.entries(topFiveModelsCount));
 
     // The arc generator
     var arc = d3
@@ -101,7 +102,6 @@ const DonutChart = ({ data, selectedMonth }) => {
       .transition()
       .duration(750)
       .attrTween("d", function (d, i) {
-        console.log(prev);
         const start = { startAngle: 0, endAngle: 0 };
 
         const test = {
@@ -123,7 +123,7 @@ const DonutChart = ({ data, selectedMonth }) => {
       })
       .attr("stroke", "white")
       .style("stroke-width", "2px");
-  }, [data]);
+  }, [topFiveModelsCount]);
 
   return (
     <StyledDonutWrapper>
@@ -135,7 +135,7 @@ const DonutChart = ({ data, selectedMonth }) => {
           </svg>
         </StyledSvgWrapper>
         <div>
-          {data.map((model, index) => (
+          {topFiveModelsCount.map((model, index) => (
             <StyledDonutLabel key={index}>
               <StyledDonutLabelNumber
                 className="donut-label"
