@@ -79,7 +79,12 @@ const contactModalContent = (
   </>
 );
 
-const Modal = ({ modalType, closeModal }) => {
+type ModalProps = {
+  modalType: string;
+  closeModal: (modalType: string) => void;
+};
+
+const Modal = ({ modalType, closeModal }: ModalProps) => {
   return (
     <StyledModal>
       <ModalBgd onClick={() => closeModal(modalType)} />
