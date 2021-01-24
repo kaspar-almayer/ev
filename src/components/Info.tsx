@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 
 const StyledInfo = styled.p`
@@ -12,12 +12,11 @@ const StyledInfo = styled.p`
 `;
 
 type InfoProps = {
-  className: string;
-  content: string;
+  className?: string;
 };
 
-const Info = ({ className, content }: InfoProps) => {
-  return <StyledInfo className={className}>{content}</StyledInfo>;
+const Info: FunctionComponent<InfoProps> = ({ children, className }) => {
+  return <StyledInfo className={className} key="test">{children}</StyledInfo>;
 };
 
 export default Info;

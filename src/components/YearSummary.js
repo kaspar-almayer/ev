@@ -57,7 +57,7 @@ const StyledInfo = styled(Info)`
   padding: 30px;
 `;
 
-const YearSummary = ({ data, summary }) => {
+const YearSummary = ({ data }) => {
   const ref = useRef();
 
   const reduceData = (data) =>
@@ -65,7 +65,9 @@ const YearSummary = ({ data, summary }) => {
       return a + b.value;
     }, 0);
 
-  data = data
+  const yearDataSum = data.map((el) => el.data).flat();
+
+  const modelsCountObject = yearDataSum
     .map(
       (el) =>
         `${
@@ -76,18 +78,19 @@ const YearSummary = ({ data, summary }) => {
       map[val] = (map[val] || 0) + 1;
       return map;
     }, {});
-  data = Object.keys(data)
+
+  const modelsCountArray = Object.keys(modelsCountObject)
     .map((key) => {
       return {
         name: key,
-        value: data[key],
+        value: modelsCountObject[key],
       };
     })
     .sort((a, b) => b.value - a.value);
 
-  data = [
-    ...data.slice(0, 10),
-    { name: "Pozostałe", value: reduceData(data.slice(10)) },
+  const topTenModelsCount = [
+    ...modelsCountArray.slice(0, 10),
+    { name: "Pozostałe", value: reduceData(modelsCountArray.slice(10)) },
   ];
 
   useEffect(() => {
@@ -97,7 +100,7 @@ const YearSummary = ({ data, summary }) => {
 
     var color = d3
       .scaleOrdinal()
-      .domain(data.map((d) => d.name))
+      .domain(topTenModelsCount.map((d) => d.name))
       .range(yearDonutColors);
 
     var pie = d3
@@ -106,7 +109,7 @@ const YearSummary = ({ data, summary }) => {
         return d.value.value;
       })
       .sort(null);
-    var data_ready = pie(d3.entries(data));
+    var data_ready = pie(d3.entries(topTenModelsCount));
 
     // The arc generator
     var arc = d3
@@ -129,19 +132,22 @@ const YearSummary = ({ data, summary }) => {
       })
       .attr("stroke", "white")
       .style("stroke-width", "2px");
-  }, [data]);
+  }, []);
 
   return (
     <YearSummaryWrapper>
-      <StyledInfo
-        content={`Top 10 nowych zerejestrowanych samochodów elektrycznych w 2020 roku (styczeń-sierpień)`}
-      />
+      <StyledInfo>
+        Top 10 nowych zerejestrowanych samochodów elektrycznych w 2020 roku
+        (styczeń-listopad)
+        <br />
+        {`W sumie - ${yearDataSum.length} samochodów`}
+      </StyledInfo>
       <StyledDonutWrapper>
         <StyledSvgWrapper>
           <svg viewBox="0 0 500 500" ref={ref} />
         </StyledSvgWrapper>
         <StyledLegendWrapper>
-          {data.map((model, index) => (
+          {topTenModelsCount.map((model, index) => (
             <StyledDonutLabel key={index}>
               <StyledDonutLabelNumber
                 className="donut-label"

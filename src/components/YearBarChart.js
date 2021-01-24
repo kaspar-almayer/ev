@@ -67,7 +67,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .data(data)
       .join("rect")
       .attr("class", "bar")
-      .attr("x", (d, index) => xScale(d.date))
+      .attr("x", (d) => xScale(d.date))
       .attr("y", (d) => yScale(d.data))
       .attr("height", (d) => yScale(300 - d.data))
       .attr("width", xScale.bandwidth())
@@ -88,11 +88,7 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
       .join("text")
       .text((d) => (d.data > 280 ? `${d.data}*` : d.data))
       .attr("class", "bar-label")
-      .attr(
-        "x",
-        (d, index) =>
-          xScale(d.date) + (d.data > 100 ? (d.data > 280 ? 2 : 4) : 7)
-      )
+      .attr("x", (d, index) => xScale(d.date) + (d.data > 100 ? 14 : 16))
       .attr("y", (d) => (d.data > 300 ? yScale(315) : yScale(d.data) + 20))
       .attr("fill", "#fff")
       .attr("font-size", 12);
@@ -130,17 +126,6 @@ const YearBarChart = ({ data, setselectedMonth, selectedMonth }) => {
           <g className="y-axis" />
         </g>
       </svg>
-      <StyledFootNote>
-        * Spike najprawdopodobniej związany ze startem wypożyczalnie samochodów
-        elektrycznych w Warszawie (
-        <a
-          href="https://moto.pl/MotoPL/7,170318,24608051,innogy-go-czyli-500-elektrycznych-bmw-dla-warszawy-rusza.html"
-          target="_blank"
-        >
-          https://moto.pl/MotoPL/7,170318,24608051,innogy-go-czyli-500-elektrycznych-bmw-dla-warszawy-rusza.html
-        </a>
-        )
-      </StyledFootNote>
     </StyledChartWrapper>
   );
 };

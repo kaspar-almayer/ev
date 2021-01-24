@@ -8,7 +8,6 @@ import Info from "./components/Info";
 import Modal from "./components/Modal";
 
 import DATA_2020 from "./data2020.json";
-import DATA_2019 from "./data2019.json";
 
 import { filterNewCars } from "./helpers";
 import styled from "styled-components";
@@ -40,8 +39,7 @@ function App() {
   };
 
   useEffect(() => {
-    const DATA = [...DATA_2019, ...DATA_2020];
-    const filteredData = DATA.map((month) => ({
+    const filteredData = DATA_2020.map((month) => ({
       ...month,
       data: month.data.filter(filterNewCars),
     }));
@@ -52,7 +50,7 @@ function App() {
   return (
     <div className="App">
       <Header handleModalToogle={handleModalToogle} />
-      <Info content="Liczba rejestracji nowych samochodów elektrycznych w Polsce." />
+      <Info>Liczba rejestracji nowych samochodów elektrycznych w Polsce.</Info>
       {modal.showModal && (
         <Modal modalType={modal.modalType} closeModal={handleModalToogle} />
       )}
@@ -67,41 +65,19 @@ function App() {
             <DonutChart
               data={
                 data.find(({ date }) => {
-                  if (selectedMonth > 12) {
-                    return date === `data_${selectedMonth - 12}_2020`;
-                  } else {
-                    return date === `data_${selectedMonth}_2019`;
-                  }
+                  return (
+                    date ===
+                    `data_${
+                      selectedMonth > 9 ? selectedMonth : `0${selectedMonth}`
+                    }_2020`
+                  );
                 }).data
               }
               selectedMonth={selectedMonth}
             />
           </StyledMain>
           <StyledMain>
-            <YearSummary
-              data={[
-                ...data[12].data,
-                ...data[13].data,
-                ...data[14].data,
-                ...data[15].data,
-                ...data[16].data,
-                ...data[17].data,
-                ...data[18].data,
-                ...data[19].data,
-              ]}
-              summary={
-                [
-                  ...data[12].data,
-                  ...data[13].data,
-                  ...data[14].data,
-                  ...data[15].data,
-                  ...data[16].data,
-                  ...data[17].data,
-                  ...data[18].data,
-                  ...data[19].data,
-                ].length
-              }
-            />
+            {dataLoaded ? <YearSummary data={data} /> : null}
           </StyledMain>
         </>
       ) : (
